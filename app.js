@@ -13,6 +13,9 @@ const bookRouter = express.Router();
 const port = process.env.PORT || 3000;
 const Book = require('./models/bookModel');
 
+const bodyParser = require('body-parser');
+
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -20,6 +23,9 @@ app.use(bodyParser.json());
 bookRouter.route('/books')
   .post((req, res) => {
     const book = new Book(req.body);
+
+    book.save();
+    return res.status(201).json(book);
 
     console.log(book);
     return res.json(book);
